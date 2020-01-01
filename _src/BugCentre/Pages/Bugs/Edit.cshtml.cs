@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BugCentre.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BugCentre.PagesBugs
 {
+    [Authorize]
     public class EditModel : PageModel
     {
         private readonly BugCentre.Data.BugCentreContext _context;
