@@ -8,5 +8,6 @@ https://docs.microsoft.com/en-us/aspnet/core/tutorials/razor-pages/model?view=as
 dotnet aspnet-codegenerator razorpage -m Bug -dc BugCentreContext -udl -outDir Pages\Bugs --referenceScriptLibraries
 
 #Migrations
-dotnet ef migrations add BugsTable --context BugCentreContext
-dotnet ef database update --context BugCentreContext
+```cd '.\_src\DB Context Library\'
+dotnet ef migrations add InitalDB --startup-project ..\BugCentre\ --context BugCentreContext
+dotnet ef database update --startup-project ..\BugCentre\ --context BugCentreContext```

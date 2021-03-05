@@ -15,9 +15,9 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Bug.BugID" />
             <div class="form-group">
-                <label asp-for="Bug.Title" class="control-label"></label>
-                <input asp-for="Bug.Title" class="form-control" />
-                <span asp-validation-for="Bug.Title" class="text-danger"></span>
+                <label asp-for="Bug.BugName" class="control-label"></label>
+                <input asp-for="Bug.BugName" class="form-control" />
+                <span asp-validation-for="Bug.BugName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Bug.DateTimeReported" class="control-label"></label>
@@ -30,9 +30,9 @@
                 <span asp-validation-for="Bug.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Bug.Image" class="control-label"></label>
-                <input asp-for="Bug.Image" class="form-control" />
-                <span asp-validation-for="Bug.Image" class="text-danger"></span>
+                <label asp-for="Bug.Images" class="control-label"></label>
+                <input asp-for="Bug.Images" class="form-control" />
+                <span asp-validation-for="Bug.Images" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

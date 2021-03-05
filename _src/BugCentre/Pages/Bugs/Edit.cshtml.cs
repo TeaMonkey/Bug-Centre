@@ -8,15 +8,17 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BugCentre.Data;
 using Microsoft.AspNetCore.Authorization;
+using DB_Context_Library;
+using Entities_Library;
 
 namespace BugCentre.PagesBugs
 {
     [Authorize]
     public class EditModel : PageModel
     {
-        private readonly BugCentre.Data.BugCentreContext _context;
+        private readonly BugCentreContext _context;
 
-        public EditModel(BugCentre.Data.BugCentreContext context)
+        public EditModel(BugCentreContext context)
         {
             _context = context;
         }

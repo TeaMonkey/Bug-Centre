@@ -1,26 +1,46 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace BugCentre.Migrations
+namespace DB_Context_Library.Migrations
 {
-    public partial class BugsTable : Migration
+    public partial class InitalDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Priority",
+                columns: table => new
+                {
+                    PriorityID = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    PriorityName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Priority", x => x.PriorityID);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Bugs",
                 columns: table => new
                 {
                     BugID = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Title = table.Column<string>(nullable: true),
+                    BugName = table.Column<string>(nullable: true),
                     DateTimeReported = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(nullable: true),
-                    Image = table.Column<byte[]>(nullable: true)
+                    Images = table.Column<byte[]>(nullable: true),
+                    BugPriorityPriorityID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Bugs", x => x.BugID);
+                    table.ForeignKey(
+                        name: "FK_Bugs_Priority_BugPriorityPriorityID",
+                        column: x => x.BugPriorityPriorityID,
+                        principalTable: "Priority",
+                        principalColumn: "PriorityID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -29,7 +49,7 @@ namespace BugCentre.Migrations
                 {
                     NoteId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Text = table.Column<string>(nullable: true),
+                    NoteText = table.Column<string>(nullable: true),
                     BugID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -44,6 +64,11 @@ namespace BugCentre.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Bugs_BugPriorityPriorityID",
+                table: "Bugs",
+                column: "BugPriorityPriorityID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Notes_BugID",
                 table: "Notes",
                 column: "BugID");
@@ -56,6 +81,9 @@ namespace BugCentre.Migrations
 
             migrationBuilder.DropTable(
                 name: "Bugs");
+
+            migrationBuilder.DropTable(
+                name: "Priority");
         }
     }
 }

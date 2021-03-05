@@ -14,7 +14,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Bug[0].Title)
+                @Html.DisplayNameFor(model => model.Bug[0].BugName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Bug[0].DateTimeReported)
@@ -23,7 +23,7 @@
                 @Html.DisplayNameFor(model => model.Bug[0].Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Bug[0].Image)
+                @Html.DisplayNameFor(model => model.Bug[0].Images)
             </th>
             <th></th>
         </tr>
@@ -32,7 +32,7 @@
 @foreach (var item in Model.Bug) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                @Html.DisplayFor(modelItem => item.BugName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateTimeReported)
@@ -41,7 +41,7 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Image)
+                @Html.DisplayFor(modelItem => item.Images)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.BugID">Edit</a> |

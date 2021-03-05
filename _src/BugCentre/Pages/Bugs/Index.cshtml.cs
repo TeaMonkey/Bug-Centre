@@ -6,14 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BugCentre.Data;
+using DB_Context_Library;
+using Entities_Library;
 
 namespace BugCentre.PagesBugs
 {
     public class IndexModel : PageModel
     {
-        private readonly BugCentre.Data.BugCentreContext _context;
+        private readonly BugCentreContext _context;
 
-        public IndexModel(BugCentre.Data.BugCentreContext context)
+        public IndexModel(BugCentreContext context)
         {
             _context = context;
         }

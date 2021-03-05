@@ -12,6 +12,7 @@ using BugCentre.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using DB_Context_Library;
 
 namespace BugCentre
 {
@@ -33,7 +34,7 @@ namespace BugCentre
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
                 
-services.AddDbContext<BugCentreContext>(options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<BugCentreContext>(options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddRazorPages();
 

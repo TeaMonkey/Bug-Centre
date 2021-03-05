@@ -7,15 +7,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using BugCentre.Data;
 using Microsoft.AspNetCore.Authorization;
+using DB_Context_Library;
+using Entities_Library;
 
 namespace BugCentre.PagesBugs
 {
     [Authorize]
     public class CreateModel : PageModel
     {
-        private readonly BugCentre.Data.BugCentreContext _context;
+        private readonly BugCentreContext _context;
 
-        public CreateModel(BugCentre.Data.BugCentreContext context)
+        public CreateModel(BugCentreContext context)
         {
             _context = context;
         }
