@@ -34,7 +34,7 @@ namespace DB_Context_Library.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
-                    b.Property<byte[]>("Images")
+                    b.Property<byte[]>("Image")
                         .HasColumnType("BLOB");
 
                     b.HasKey("BugID");

@@ -29,3 +29,4 @@ dotnet ef database update --startup-project ..\BugCentre\ --context BugCentreCon
 - [ ] Add ability to auto wide the DB and start with a few default bug items to keep DB size down if using this as a demo site
 - [ ] Add ability to email bug status
 - [ ] Think of more items I want this to do
+- [ ] Use https://www.learnrazorpages.com/razor-pages/forms/dates-and-times#datetime-inputs and do a custom view model for the datetimes so we can use HTML5 controls

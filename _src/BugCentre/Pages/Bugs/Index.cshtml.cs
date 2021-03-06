@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BugCentre.Data;
 using DB_Context_Library;
 using Entities_Library;
+using BugCentre.ViewModels;
 
 namespace BugCentre.PagesBugs
 {
@@ -20,11 +21,11 @@ namespace BugCentre.PagesBugs
             _context = context;
         }
 
-        public IList<Bug> Bug { get;set; }
+        public IList<BugVM> BugsVm { get;set; }
 
         public async Task OnGetAsync()
         {
-            Bug = await _context.Bugs.ToListAsync();
+            BugsVm = await _context.Bugs.Select(b => new BugVM { BugID = b.BugID, BugName = b.BugName, DateTimeReported = b.DateTimeReported, Description = b.Description, Image = b.Image }).ToListAsync();
         }
     }
 }

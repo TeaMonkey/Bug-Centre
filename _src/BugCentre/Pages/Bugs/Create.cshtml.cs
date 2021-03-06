@@ -9,6 +9,9 @@ using BugCentre.Data;
 using Microsoft.AspNetCore.Authorization;
 using DB_Context_Library;
 using Entities_Library;
+using Microsoft.AspNetCore.Http;
+using BugCentre.ViewModels;
+using System.IO;
 
 namespace BugCentre.PagesBugs
 {
@@ -28,10 +31,8 @@ namespace BugCentre.PagesBugs
         }
 
         [BindProperty]
-        public Bug Bug { get; set; }
+        public BugCreateVM BugCreateVm { get; set; }
 
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -39,7 +40,23 @@ namespace BugCentre.PagesBugs
                 return Page();
             }
 
-            _context.Bugs.Add(Bug);
+            if (BugCreateVm.UploadedImage.Length > 0)
+            {
+                //TODO: Put this in a helper
+
+                using (var ms = new MemoryStream())
+                {
+                    BugCreateVm.UploadedImage.CopyTo(ms);
+                    //var fileBytes = ms.ToArray();
+                    //string s = Convert.ToBase64String(fileBytes);
+                    BugCreateVm.Image = ms.ToArray();
+                }
+            }
+
+            var entry = _context.Add(new Bug());
+            entry.CurrentValues.SetValues(BugCreateVm);
+
+            //_context.Bugs.Add(BugVm);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

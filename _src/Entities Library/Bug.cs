@@ -12,7 +12,7 @@ namespace Entities_Library
         public string BugName { get; set; }
         public DateTime DateTimeReported { get; set; }
         public string Description { get; set; }
-        public byte[] Images { get; set; }
+        public byte[] Image { get; set; }
         
         public ICollection<Note> Notes { get; set; }
         public Priority BugPriority { get; set; }
