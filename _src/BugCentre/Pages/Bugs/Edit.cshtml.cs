@@ -1,15 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using BugCentre.ViewModels;
+using DB_Context_Library;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using BugCentre.Data;
-using Microsoft.AspNetCore.Authorization;
-using DB_Context_Library;
-using Entities_Library;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BugCentre.PagesBugs
 {
@@ -24,7 +21,7 @@ namespace BugCentre.PagesBugs
         }
 
         [BindProperty]
-        public Bug Bug { get; set; }
+        public BugEditVM BugEditVm { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -33,17 +30,15 @@ namespace BugCentre.PagesBugs
                 return NotFound();
             }
 
-            Bug = await _context.Bugs.FirstOrDefaultAsync(m => m.BugID == id);
+            BugEditVm = await _context.Bugs.Select(b => new BugEditVM { BugID = b.BugID, BugName = b.BugName, DateTimeReported = b.DateTimeReported, Description = b.Description, Image = b.Image }).FirstOrDefaultAsync(m => m.BugID == id);
 
-            if (Bug == null)
+            if (BugEditVm == null)
             {
                 return NotFound();
             }
             return Page();
         }
 
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -51,30 +46,65 @@ namespace BugCentre.PagesBugs
                 return Page();
             }
 
-            _context.Attach(Bug).State = EntityState.Modified;
+            //TODO - Eventually add a check here to make sure the current user has access to this bug
+            var bugToUpdate = await _context.Bugs.FindAsync(BugEditVm.BugID);
 
+            if (bugToUpdate == null)
+            {
+                return NotFound();
+            }
+
+            if (BugEditVm.UploadedImage?.Length > 0)
+            {
+                //TODO: Put this in a helper
+
+                using (var ms = new MemoryStream())
+                {
+                    BugEditVm.UploadedImage.CopyTo(ms);
+                    BugEditVm.Image = ms.ToArray();
+                }
+            }
+
+            MapVmToModel(bugToUpdate);
+
+            //if (await TryUpdateModelAsync<Bug>(bugToUpdate, "", b => b.BugName, b => b.DateTimeReported, b => b.Description, b => b.Image))
+            //{
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BugExists(Bug.BugID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                //if (!BugExists(BugEditVm.BugID))
+                //{
+                //    return NotFound();
+                //}
+                //else
+                //{
+                throw;
+                //}
             }
+            //  }
 
             return RedirectToPage("./Index");
         }
 
-        private bool BugExists(int id)
+        private void MapVmToModel(Entities_Library.Bug bugToUpdate)
         {
-            return _context.Bugs.Any(e => e.BugID == id);
+            bugToUpdate.BugName = BugEditVm.BugName;
+            bugToUpdate.DateTimeReported = BugEditVm.DateTimeReported;
+            bugToUpdate.Description = BugEditVm.Description;
+
+            if (BugEditVm.Image != null)
+                bugToUpdate.Image = BugEditVm.Image;
+
+            if (BugEditVm.DeleteImage)
+                bugToUpdate.Image = null;
         }
+
+        //private bool BugExists(int id)
+        //{
+        //    return _context.Bugs.Any(e => e.BugID == id);
+        //}
     }
 }

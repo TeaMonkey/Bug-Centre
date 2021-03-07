@@ -11,28 +11,37 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Bug.BugID" />
+            <input type="hidden" asp-for="BugEditVm.BugID" />
             <div class="form-group">
-                <label asp-for="Bug.BugName" class="control-label"></label>
-                <input asp-for="Bug.BugName" class="form-control" />
-                <span asp-validation-for="Bug.BugName" class="text-danger"></span>
+                <label asp-for="BugEditVm.BugName" class="control-label"></label>
+                <input asp-for="BugEditVm.BugName" class="form-control" />
+                <span asp-validation-for="BugEditVm.BugName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Bug.DateTimeReported" class="control-label"></label>
-                <input asp-for="Bug.DateTimeReported" class="form-control" />
-                <span asp-validation-for="Bug.DateTimeReported" class="text-danger"></span>
+                <label asp-for="BugEditVm.DateTimeReported" class="control-label"></label>
+                <input asp-for="BugEditVm.DateTimeReported" class="form-control" />
+                <span asp-validation-for="BugEditVm.DateTimeReported" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Bug.Description" class="control-label"></label>
-                <input asp-for="Bug.Description" class="form-control" />
-                <span asp-validation-for="Bug.Description" class="text-danger"></span>
+                <label asp-for="BugEditVm.Description" class="control-label"></label>
+                <input asp-for="BugEditVm.Description" class="form-control" />
+                <span asp-validation-for="BugEditVm.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Bug.Image" class="control-label"></label>
-                <input asp-for="Bug.Image" class="form-control" />
-                <span asp-validation-for="Bug.Image" class="text-danger"></span>
+                <label asp-for="BugEditVm.UploadedImage" class="control-label"></label>
+                @if (Model.BugEditVm.Image != null)
+                {
+                    <br /><img src="data:image;base64,@Convert.ToBase64String(Model.BugEditVm.Image)" style="max-height:150px; max-width:150px;" /><br />
+                }
+                <input asp-for="BugEditVm.UploadedImage" class="form-control" />
+                <span asp-validation-for="BugEditVm.UploadedImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BugEditVm.DeleteImage" class="control-label"></label>
+                <input asp-for="BugEditVm.DeleteImage" class="form-control" />
+                <span asp-validation-for="BugEditVm.DeleteImage" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
