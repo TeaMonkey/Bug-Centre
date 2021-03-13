@@ -1,15 +1,16 @@
-@page
+@page "{currentpage:int?}"
 @model BugCentre.PagesBugs.IndexModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Bug List</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+<partial name="/Pages/Shared/_PagingPartial.cshtml" model="Model.paging" />
 <table class="table">
     <thead>
         <tr>
@@ -29,29 +30,31 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.BugsVm) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.BugName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateTimeReported)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @if (item.Image != null)
-            {
-                <img src="data:image;base64,@Convert.ToBase64String(item.Image)" style="max-height:150px; max-width:150px;" />
-            }
-        </td>
-        <td>
-            <a asp-page="./Edit" asp-route-id="@item.BugID">Edit</a> |
-            <a asp-page="./Details" asp-route-id="@item.BugID">Details</a> |
-            <a asp-page="./Delete" asp-route-id="@item.BugID">Delete</a>
-        </td>
-    </tr>
-}
+        @foreach (var item in Model.BugsVm)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BugName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateTimeReported)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @if (item.Image != null)
+                    {
+                        <img src="data:image;base64,@Convert.ToBase64String(item.Image)" style="max-height:150px; max-width:150px;" />
+                    }
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.BugID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.BugID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.BugID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<partial name="/Pages/Shared/_PagingPartial.cshtml" model="Model.paging" />

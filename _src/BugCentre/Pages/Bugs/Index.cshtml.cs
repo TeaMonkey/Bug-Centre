@@ -9,23 +9,30 @@ using BugCentre.Data;
 using DB_Context_Library;
 using Entities_Library;
 using BugCentre.ViewModels;
+using BugCentre.Infrastructure;
+using BugCentre.Pages.Shared;
 
 namespace BugCentre.PagesBugs
 {
     public class IndexModel : PageModel
     {
-        private readonly BugCentreContext _context;
+        private readonly IBugService _bugService;
 
-        public IndexModel(BugCentreContext context)
+        public IndexModel(IBugService bugService)
         {
-            _context = context;
+            _bugService = bugService;
         }
 
         public IList<BugVM> BugsVm { get;set; }
+        public _PagingPartialModel paging { get; set; } = new _PagingPartialModel();
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(int CurrentPage = 1)
         {
-            BugsVm = await _context.Bugs.Select(b => new BugVM { BugID = b.BugID, BugName = b.BugName, DateTimeReported = b.DateTimeReported, Description = b.Description, Image = b.Image }).ToListAsync();
+            paging.CurrentPage = CurrentPage;
+
+            List<Bug> Bugs = await _bugService.GetPaginatedResult(paging.CurrentPage, paging.PageSize);
+            BugsVm = Bugs.Select(b => new BugVM { BugID = b.BugID, BugName = b.BugName, DateTimeReported = b.DateTimeReported, Description = b.Description, Image = b.Image }).ToList();
+            paging.Count = await _bugService.GetCount();
         }
     }
 }

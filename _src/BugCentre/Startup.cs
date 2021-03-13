@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DB_Context_Library;
+using BugCentre.Infrastructure;
 
 namespace BugCentre
 {
@@ -65,6 +66,8 @@ namespace BugCentre
                 //options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
+
+            services.AddTransient<IBugService, BugService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
