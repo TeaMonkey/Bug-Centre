@@ -11,6 +11,9 @@ namespace DB_Context_Library
         public DbSet<Bug> Bugs { get; set; }
         public DbSet<Note> Notes { get; set; }
 
+        public DbSet<Attachment> Attachments { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+
         public BugCentreContext(DbContextOptions<BugCentreContext> options) : base(options) { }
     }
 }
