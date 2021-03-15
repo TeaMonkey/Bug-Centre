@@ -15,5 +15,10 @@ namespace DB_Context_Library
         public DbSet<Comment> Comments { get; set; }
 
         public BugCentreContext(DbContextOptions<BugCentreContext> options) : base(options) { }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+        }
     }
 }

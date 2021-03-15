@@ -13,6 +13,6 @@ namespace Entities_Library
 
         public DateTime CreatedDateTime { get; set; }
 
-        public Bug Bug { get; set; }
+        public virtual Bug Bug { get; set; }
     }
 }

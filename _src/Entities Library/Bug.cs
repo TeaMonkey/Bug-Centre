@@ -14,9 +14,9 @@ namespace Entities_Library
         public string Description { get; set; }
         public byte[] Image { get; set; }
         
-        public ICollection<Note> Notes { get; set; }
-        public Priority BugPriority { get; set; }
-        //public Project BugProject { get; set; }
-        //public User CreatedUser { get; set; }
+        public virtual ICollection<Note> Notes { get; set; }
+        public virtual Priority BugPriority { get; set; }
+        //public virtual Project BugProject { get; set; }
+        //public virtual User CreatedUser { get; set; }
     }
 }

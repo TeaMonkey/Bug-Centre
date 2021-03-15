@@ -10,6 +10,6 @@ namespace Entities_Library
         public string Text { get; set; }
         public DateTime CreatedDateTime { get; set; }
 
-        public Bug Bug { get; set; }
+        public virtual Bug Bug { get; set; }
     }
 }

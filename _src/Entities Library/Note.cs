@@ -9,6 +9,6 @@ namespace Entities_Library
         public int NoteId { get; set; }
         public string NoteText { get; set; }
 
-        public Bug Bug { get; set; }
+        public virtual Bug Bug { get; set; }
     }
 }

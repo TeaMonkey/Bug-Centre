@@ -34,7 +34,8 @@ namespace BugCentre
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-                
+
+            //services.AddDbContext<BugCentreContext>(options => options.UseLazyLoadingProxies().UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<BugCentreContext>(options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddRazorPages();
